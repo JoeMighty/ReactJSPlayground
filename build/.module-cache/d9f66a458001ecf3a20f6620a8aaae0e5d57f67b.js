@@ -37,6 +37,10 @@ var CommentBox = React.createClass({displayName: "CommentBox",
     },
 
     loadCommentsFromServer: function() {
+
+        console.log("here");
+        console.log(this.props.url);
+
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -56,13 +60,13 @@ var CommentBox = React.createClass({displayName: "CommentBox",
     },
 
     render: function() {
-        return (
-            React.createElement("div", {className: "commentBox"}, 
-                React.createElement("h1", null, "Gooo REACT JS!"), 
-                React.createElement(CommentList, {data: this.state.data}), 
-                React.createElement(CommentForm, null)
-            )
-        );
+    return (
+      React.createElement("div", {className: "commentBox"}, 
+        React.createElement("h1", null, "Gooo REACT JS!"), 
+        React.createElement(CommentList, {data: this.state.data}), 
+        React.createElement(CommentForm, null)
+      )
+    );
     }
 });
 

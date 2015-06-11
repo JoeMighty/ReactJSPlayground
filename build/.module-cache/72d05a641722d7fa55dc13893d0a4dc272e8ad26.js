@@ -8,8 +8,8 @@ var CommentList = React.createClass({displayName: "CommentList",
 
     var commentNodes = this.props.data.map(function (comment) {
       return (
-        React.createElement(Comment, {author: comment.name}, 
-          comment.body
+        React.createElement(Comment, {author: comment.author}, 
+          comment.text
         )
       );
     });
@@ -37,6 +37,10 @@ var CommentBox = React.createClass({displayName: "CommentBox",
     },
 
     loadCommentsFromServer: function() {
+
+        console.log("here");
+        console.log(this.props.url);
+
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -51,18 +55,19 @@ var CommentBox = React.createClass({displayName: "CommentBox",
     },
 
     componentDidMount: function() {
+        console.log("mounted");
         this.loadCommentsFromServer();
         setInterval(this.loadCommentsFromServer, this.props.pollInterval);
     },
 
     render: function() {
-        return (
-            React.createElement("div", {className: "commentBox"}, 
-                React.createElement("h1", null, "Gooo REACT JS!"), 
-                React.createElement(CommentList, {data: this.state.data}), 
-                React.createElement(CommentForm, null)
-            )
-        );
+    return (
+      React.createElement("div", {className: "commentBox"}, 
+        React.createElement("h1", null, "Gooo REACT JS!"), 
+        React.createElement(CommentList, {data: this.state.data}), 
+        React.createElement(CommentForm, null)
+      )
+    );
     }
 });
 
@@ -81,6 +86,6 @@ var Comment = React.createClass({displayName: "Comment",
 });
 
 React.render(
- React.createElement(CommentBox, {url: "http://jsonplaceholder.typicode.com/comments", pollInterval: 9000}),
+ React.createElement(CommentBox, {url: "http://jsonplaceholder.typicode.com/comments", pollInterval: 2000}),
   document.getElementById('content')
 );
