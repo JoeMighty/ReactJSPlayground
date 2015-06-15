@@ -30,8 +30,6 @@ var CommentForm = React.createClass({displayName: "CommentForm",
             return;
         }
         // TODO: send request to the server
-        this.props.onCommentSubmit({author: author, text: text});
-
         React.findDOMNode(this.refs.author).value = '';
         React.findDOMNode(this.refs.text).value = '';
         return;
@@ -39,8 +37,8 @@ var CommentForm = React.createClass({displayName: "CommentForm",
     render: function() {
     return (
         React.createElement("form", {className: "commentForm", onSubmit: this.handleSubmit}, 
-            React.createElement("input", {type: "text", placeholder: "Your name", ref: "author"}), 
-            React.createElement("input", {type: "text", placeholder: "Say something...", ref: "text"}), 
+            React.createElement("input", {type: "text", placeholder: "Your name"}), 
+            React.createElement("input", {type: "text", placeholder: "Say something..."}), 
             React.createElement("input", {type: "submit", value: "Post"})
         )
     );
@@ -66,21 +64,6 @@ var CommentBox = React.createClass({displayName: "CommentBox",
         });
     },
 
-    handleCommentSubmit: function(comment) {
-        $.ajax({
-            url: this.props.url,
-            dataType: 'json',
-            type: 'POST',
-            data: comment,
-            success: function(data) {
-                this.setState({data: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
-    },
-
     componentDidMount: function() {
         this.loadCommentsFromServer();
         setInterval(this.loadCommentsFromServer, this.props.pollInterval);
@@ -90,8 +73,8 @@ var CommentBox = React.createClass({displayName: "CommentBox",
         return (
             React.createElement("div", {className: "commentBox"}, 
                 React.createElement("h1", null, "Gooo REACT JS!"), 
-                React.createElement(CommentForm, {onCommentSubmit: this.handleCommentSubmit}), 
-                React.createElement(CommentList, {data: this.state.data})
+                React.createElement(CommentList, {data: this.state.data}), 
+                React.createElement(CommentForm, null)
             )
         );
     }
